@@ -75,12 +75,11 @@ gulp.task('styles', function() {
 gulp.task('vendorstyles', function() {
   return gulp.src('build/styles/vendor.scss')
     .pipe(sass({
-        includePaths: [
-          bower + '/bootstrap-sass-official/assets/stylesheets',
-          bower + '/fontawesome/scss',
-        ]
-      }
-    ))
+      includePaths: [
+        bower + '/bootstrap-sass-official/assets/stylesheets',
+        bower + '/fontawesome/scss',
+      ]
+    }))
     .on('error', notify.onError(function(error){
       return 'Error: '+error.message;
     }))
@@ -94,16 +93,16 @@ gulp.task('vendorstyles', function() {
  * Move fonts from fontawsome
  */
 gulp.task('fonts', function() { 
-    return gulp.src(bower + '/fontawesome/fonts/**.*') 
-        .pipe(gulp.dest(target+'/fonts')); 
+  return gulp.src(bower + '/fontawesome/fonts/**.*') 
+    .pipe(gulp.dest(target+'/fonts')); 
 });
 
 /**
  * Move htaccess file
  */
 gulp.task('htaccess', function() { 
-    return gulp.src('build/.htaccess') 
-        .pipe(gulp.dest(target)); 
+  return gulp.src('build/.htaccess') 
+    .pipe(gulp.dest(target)); 
 });
 
 /**
@@ -128,7 +127,7 @@ gulp.task('scripts', function() {
  * Gulp cleaning task deletes the whole dist directory ready for the other scripts to re-build it
  */
 gulp.task('clean', function(cb) {
-    del(['dist/'], cb);
+  del(['dist/'], cb);
 });
 
 gulp.task('html',function(){
@@ -138,7 +137,7 @@ gulp.task('html',function(){
    */
   gulp.src("build/**/*.tpl.html")
     .pipe(ngHtml2Js({
-        moduleName: "partials"
+      moduleName: "partials"
     }))
     .pipe(concat("partials.js"))
     .pipe(gulp.dest("./dist/partials"))
@@ -178,7 +177,7 @@ gulp.task('concatbower', function(){
  * Runs the clean task first then runs everything needed to build up that target directory
  */
 gulp.task('everything', ['clean'], function() {
-    gulp.start('htaccess', 'concatbower', 'styles', 'scripts', 'images', 'html', 'vendorstyles', 'fonts');
+  gulp.start('htaccess', 'concatbower', 'styles', 'scripts', 'images', 'html', 'vendorstyles', 'fonts');
 });
 
 /**
@@ -196,16 +195,16 @@ gulp.task('watch', ['browser-sync'], function(){
  * Browser-sync setup task
  */
 gulp.task('browser-sync', function() {
-    browserSync({
-        proxy: hostLocation
-    });
+  browserSync({
+    proxy: hostLocation
+  });
 });
 
 /**
  * Reload all Browsers
  */
 gulp.task('bs-reload', function () {
-    browserSync.reload();
+  browserSync.reload();
 });
 
 /**
