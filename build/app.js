@@ -3,19 +3,21 @@
 
     angular
         .module('app', [
-        	'ngRoute',
             'ngLodash',
             'app.routes',
             'app.factory',
 			'app.controllers',
             'app.filters',
+            'app.constant',
             'ui.router',
-            'partials'
+            'partials',
+            'ngStorage'
         ]);
 
-    angular.module('app.routes', ['ngRoute','ui.router']);
+    angular.module('app.constant', []);
+    angular.module('app.filters', []);
+    angular.module('app.routes', ['ui.router']);
     angular.module('app.factory', ['ngResource']);
     angular.module('app.controllers', []);
-    angular.module('app.filters', []);
 
 })();

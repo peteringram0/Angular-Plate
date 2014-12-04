@@ -33,6 +33,11 @@
             templateUrl: 'registered/registered.tpl.html'
         });
 
+        $stateProvider.state("otherwise", { 
+            url : '/',
+            templateUrl: 'inner/inner.tpl.html'
+        });
+
     }
 
 })();
