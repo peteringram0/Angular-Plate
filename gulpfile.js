@@ -194,6 +194,7 @@ gulp.task('watch', ['browser-sync'], function(){
   gulp.watch('build/**/*.js', ['scripts', browserSync.reload]);
   gulp.watch('build/images/**/*.*', ['images', browserSync.reload]);
   gulp.watch('build/**/*.tpl.html', ['html', browserSync.reload]);
+  gulp.watch('build/index.html', ['html', browserSync.reload]);
 });
 
 /**
