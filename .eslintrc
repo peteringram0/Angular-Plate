@@ -3,7 +3,7 @@
   },
   "globals": {
     "angular": true, // make angular global
-    "console": true
+    "require": true // Stop errors inside gulpfile
   },
   "rules": {
     "indent": [2, "tab"], // tabs only

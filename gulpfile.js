@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 'use strict';
 
 /**
@@ -32,7 +34,6 @@ var gulp = require('gulp'),
 	watch = require('gulp-watch'),
 	sass = require('gulp-sass'),
 	notify = require('gulp-notify'),
-	//jshint = require('gulp-jshint'),
 	concat = require('gulp-concat'),
 	rename = require('gulp-rename'),
 	uglify = require('gulp-uglify'),
@@ -41,8 +42,8 @@ var gulp = require('gulp'),
 	browserSync = require('browser-sync'),
 	minifycss = require('gulp-minify-css'),
 	bowerFiles = require('bower-files')(),
-	ngHtml2Js = require("gulp-ng-html2js"),
-	order = require("gulp-order"),
+	ngHtml2Js = require('gulp-ng-html2js'),
+	order = require('gulp-order'),
 	chmod = require('gulp-chmod'),
 	sourcemaps = require('gulp-sourcemaps'),
 	preprocess = require('gulp-preprocess'),
@@ -138,7 +139,7 @@ gulp.task('styles', function() {
 gulp.task('fontawesome', function() { 
 	return gulp.src(bower + '/fontawesome/fonts/**.*') 
 	.
-	pipe(gulp.dest(target + '/fonts')); 
+	pipe(gulp.dest(target + '/fonts'));
 });
 
 /**
@@ -161,27 +162,11 @@ gulp.task('scripts', function() {
 			'app.js',
 			'**/*.js'
 		]), {base: 'build/'})
-
-	/**
-	 * ESlint based on the rules defined in the project root
-	 */
 		.pipe(eslint(
-			{ rulePaths: ['/'] }
+			{rulePaths: ['/']}
 		))
-
-	/**
-	 * Error based on the default format
-	 */
 		.pipe(eslint.format())
-
-	/**
-	 * Fail the build on error
-	 */
 		.pipe(eslint.failAfterError())
-
-		//.pipe(jshint())
-		//.pipe(jshint.reporter('jshint-stylish'))
-
 		.pipe(plumber({
 			errorHandler: onError
 		}))
@@ -280,3 +265,5 @@ gulp.task('browser-sync', function() {
 gulp.task('default', ['everything'], function() {
 	gulp.start('watch', 'browser-sync');
 });
+
+/*eslint-enable */
