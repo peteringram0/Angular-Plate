@@ -1,18 +1,18 @@
 (function() {
-    'use strict';
+	'use strict';
 
-    angular
-        .module('app.constant')
-        .constant('config', constant());
+	angular
+		.module('app.constant')
+		.constant('config', constant());
 
-        /**
-         * Constant's config 
-         * @author Peter Ingram <peter.ingram@hutchhouse.com>
-         */
-        function constant() {
-            return {
-                'apiURL':'http://homestead.app'
-            };
-        }
+	/**
+	 * Constant's config
+	 * @author Peter Ingram <peter.ingram@hutchhouse.com>
+	 */
+	function constant() {
+		return {
+			'apiURL': 'http://homestead.app'
+		};
+	}
 
 })();

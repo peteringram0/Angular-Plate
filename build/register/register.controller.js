@@ -1,12 +1,11 @@
 (function() {
-    'use strict';
+	'use strict';
 
-    angular
-        .module('app.controllers')
-        .controller('register', register);
+	angular
+		.module('app.controllers')
+		.controller('register', register);
 
-    function register() {
-        console.log('register');
-    }
+	function register() {
+	}
 
 })();

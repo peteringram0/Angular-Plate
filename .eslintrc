@@ -1,0 +1,14 @@
+{
+  "env": {
+  },
+  "globals": {
+    "angular": true, // make angular global
+    "console": true
+  },
+  "rules": {
+    "indent": [2, "tab"], // tabs only
+    "quotes":[2, "single", "avoid-escape"], // Single quote makes only
+    "brace-style": [2, "stroustrup", { "allowSingleLine": true }], // Open brackets need to be on the same line - not php style
+    "no-use-before-define": 0
+  }
+}
