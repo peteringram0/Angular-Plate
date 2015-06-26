@@ -7,7 +7,6 @@
 
 	/**
 	 * This should be an overview of what this factory's job is.
-	 *
 	 * @author Peter Ingram <peter.ingram@hutchhouse.com>
 	 */
 	function dataServiceFactory() {

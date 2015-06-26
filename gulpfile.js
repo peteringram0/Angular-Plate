@@ -115,7 +115,7 @@ gulp.task('releaseTag', function(done) {
  * This is as you can minify after producing a sourcemap and we want the other not to contain the map.
  */
 gulp.task('styles', function() {
-	return gulp.src(['build/styles/styles.scss', bower + '/animate.css/animate.min.css'])
+	return gulp.src(['build/styles/styles.scss'])
 		.pipe(scsslint({
 			'config': 'lint.yml'
 		}))
