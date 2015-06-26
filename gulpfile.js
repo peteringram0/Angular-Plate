@@ -126,7 +126,7 @@ gulp.task('styles', function() {
 				bower + '/fontawesome/scss',
 			]
 		}))
-		.pipe(gulpif(productionMode, concatCss(appName + '.css')))
+		//.pipe(gulpif(productionMode, concatCss(appName + '.css')))
 		.pipe(gulpif(!productionMode, sourcemaps.write()))
 		.pipe(plumber({
 			errorHandler: onError
@@ -141,9 +141,8 @@ gulp.task('styles', function() {
  * Move fontawesome from fontawsome
  */
 gulp.task('fontawesome', function() { 
-	return gulp.src(bower + '/fontawesome/fonts/**.*') 
-	.
-	pipe(gulp.dest(target + '/fonts'));
+	return gulp.src([bower + '/fontawesome/fonts/**.*']) 
+	.pipe(gulp.dest(target + '/fonts'));
 });
 
 /**
@@ -151,8 +150,7 @@ gulp.task('fontawesome', function() { 
  */
 gulp.task('htaccess', function() { 
 	return gulp.src('build/**/.htaccess') 
-	.
-	pipe(gulp.dest(target)); 
+	.pipe(gulp.dest(target)); 
 });
 
 /**
