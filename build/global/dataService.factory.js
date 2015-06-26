@@ -1,47 +1,46 @@
 (function() {
-    'use strict';
+	'use strict';
 
-    angular
-        .module('app.factory')
-        .factory('dataServiceFactory', dataServiceFactory);
-    
-    /**
-     * This should be an overview of what this factory's job is.
-     * 
-     * @author Peter Ingram <peter.ingram@hutchhouse.com>
-     */
-    function dataServiceFactory() {
+	angular
+		.module('app.factory')
+		.factory('dataServiceFactory', dataServiceFactory);
 
-        var posts = [];
+	/**
+	 * This should be an overview of what this factory's job is.
+	 * @author Peter Ingram <peter.ingram@hutchhouse.com>
+	 */
+	function dataServiceFactory() {
 
-        var service = {
-            add: add,
-            getPosts: getPosts
-        };
+		var posts = [];
 
-        return service;
+		var service = {
+			add: add,
+			getPosts: getPosts
+		};
 
-        /**
-         * Adds to the posts array
-         * 
-         * @author Peter Ingram <peter.ingram@hutchhouse.com>
-         * @param  {[type]} type [description]
-         * @param  {[type]} data [description]
-         */
-        function add(type, data) {
-            posts.push({type: data});
-        }
+		return service;
 
-        /**
-         * Returns the post array
-         * 
-         * @author Peter Ingram <peter.ingram@hutchhouse.com>
-         * @return {[type]} [description]
-         */
-        function getPosts() {
-            return posts;
-        }
+		/**
+		 * Adds to the posts array
+		 *
+		 * @author Peter Ingram <peter.ingram@hutchhouse.com>
+		 * @param  {[type]} type [description]
+		 * @param  {[type]} data [description]
+		 */
+		function add(type, data) {
+			posts.push({type: data});
+		}
 
-    }
+		/**
+		 * Returns the post array
+		 *
+		 * @author Peter Ingram <peter.ingram@hutchhouse.com>
+		 * @return {[type]} [description]
+		 */
+		function getPosts() {
+			return posts;
+		}
+
+	}
 
 })();

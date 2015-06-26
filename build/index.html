@@ -3,24 +3,51 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
     <title>AngularJS Boilerplate</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/vendor.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+
     <base href="/">
+
+    <!-- @if ENV='dev' -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- @endif -->
+
+    <!-- @if ENV='homedev' -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- @endif -->
+
+    <!-- @if ENV='prod' -->
+    <link rel="stylesheet" href="css/theme.min.css?v=<!--@echo RELEASE_TAG-->">
+    <!-- @endif -->
+
 </head>
 <body>
 
-    <ul class="menu">
-        <li><a href="register">register</a></li>
-        <li><a href="registered">registered</a></li>
-    </ul>
-
     <div ui-view></div>
 
-    <script src="js/vendor.min.js"></script>
-    <script src="partials/partials.js"></script>
-    <script src="js/angularjsboilerplate.js"></script>
+    <!-- @if ENV='dev' -->
+    <script src="/js/vendor.min.js"></script>
+    <script src="/partials/partials.min.js"></script>
+    <script src="/js/theme.js"></script>
+    <!-- @endif -->
+
+    <!-- @if ENV='homedev' -->
+    <script src="/js/vendor.min.js"></script>
+    <script src="/partials/partials.min.js"></script>
+    <script src="/js/theme.js"></script>
+    <!-- @endif -->
+
+    <!-- @if ENV='prod' -->
+    <script src="/js/vendor.min.js?v=<!--@echo RELEASE_TAG-->"></script>
+    <script src="/partials/partials.min.js?v=<!--@echo RELEASE_TAG-->"></script>
+    <script src="/js/theme.min.js?v=<!--@echo RELEASE_TAG-->"></script>
+    <!-- @endif -->
+
 </body>
 </html>
