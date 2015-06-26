@@ -8,33 +8,32 @@
 	Routing.$inject = ['$stateProvider', '$locationProvider'];
 
 	/**
-	 * Routing function
-	 * @author Peter Ingram <peter.ingram0@gmail.com>
-	 * @param  {angular} $routeProvider
+	 * Routing
+	 * @author Peter Ingram <peter.ingram@hutchhouse.com>
 	 */
 	function Routing($stateProvider, $locationProvider) {
 
 		$locationProvider.html5Mode(true);
 
-		$stateProvider.state('inner', {
-			templateUrl: 'inner/inner.tpl.html'
+		$stateProvider.state('wrapper', {
+			templateUrl: 'wrapper/wrapper.tpl.html'
 		});
 
-		$stateProvider.state('inner.register', {
-			url: '/register',
-			controller: 'register as register',
-			templateUrl: 'register/register.tpl.html'
+		$stateProvider.state('wrapper.view1', {
+			url: '/view1',
+			controller: 'view1 as view1',
+			templateUrl: 'view1/view1.tpl.html'
 		});
 
-		$stateProvider.state('inner.registered', {
-			url: '/registered',
-			controller: 'registered as registered',
-			templateUrl: 'registered/registered.tpl.html'
+		$stateProvider.state('wrapper.view2', {
+			url: '/view2',
+			controller: 'view2 as view2',
+			templateUrl: 'view2/view2.tpl.html'
 		});
 
 		$stateProvider.state('otherwise', {
 			url: '/',
-			templateUrl: 'inner/inner.tpl.html'
+			templateUrl: 'wrapper/wrapper.tpl.html'
 		});
 
 	}

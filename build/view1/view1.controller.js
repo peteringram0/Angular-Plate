@@ -3,9 +3,10 @@
 
 	angular
 		.module('app.controllers')
-		.controller('registered', registered);
+		.controller('view1', view1);
 
-	function registered() {
+	function view1() {
+
 	}
 
 })();
