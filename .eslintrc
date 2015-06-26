@@ -3,7 +3,17 @@
   },
   "globals": {
     "angular": true, // make angular global
-    "require": true // Stop errors inside gulpfile
+    "require": true, // Stop errors inside gulpfile
+    "exports": true,
+    "browser": true,
+    "describe": true,
+    "it": true,
+    "expect": true,
+    "beforeEach": true,
+    "module": true,
+    "element": true,
+    "by": true,
+    "inject": true
   },
   "rules": {
     "indent": [2, "tab"], // tabs only
