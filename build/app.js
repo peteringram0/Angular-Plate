@@ -7,6 +7,7 @@
 			'app.routes',
 			'app.factory',
 			'app.controllers',
+			'app.directive',
 			'app.filters',
 			'app.constant',
 			'ui.router',
@@ -14,6 +15,7 @@
 			'ngStorage'
 		]);
 
+	angular.module('app.directive', []);
 	angular.module('app.constant', []);
 	angular.module('app.filters', []);
 	angular.module('app.routes', ['ui.router']);

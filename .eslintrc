@@ -13,7 +13,8 @@
     "module": true,
     "element": true,
     "by": true,
-    "inject": true
+    "inject": true,
+    "console": true
   },
   "rules": {
     "indent": [2, "tab"], // tabs only

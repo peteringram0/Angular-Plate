@@ -21,6 +21,11 @@
 					toMatch(/This is the partial for view 1/);
 			});
 
+			it('Directive should be called', function() {
+				expect(element.all(by.css('[hello-world]')).first().getText()).
+					toMatch(/Hello World!!/);
+			});
+
 		});
 
 		describe('view2', function() {

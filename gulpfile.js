@@ -168,7 +168,7 @@ gulp.task('scripts', function() {
 			{rulePaths: ['/']}
 		))
 		.pipe(eslint.format())
-		.pipe(eslint.failAfterError())
+		//.pipe(eslint.failAfterError()) Fail if any ESlint errors
 		.pipe(plumber({
 			errorHandler: onError
 		}))
