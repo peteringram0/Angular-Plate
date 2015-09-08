@@ -7,7 +7,7 @@
 
 	/**
 	 * Constant's config
-	 * @author Peter Ingram <peter.ingram@hutchhouse.com>
+	 * @author Peter Ingram <peter.ingram0@gmail.com>
 	 */
 	function constant() {
 		return {

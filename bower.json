@@ -1,7 +1,7 @@
 {
-  "name": "angularjs-boilerplate",
-  "description": "AngularJS Boilerplate",
-  "version": "0.1.0",
+  "name": "angularjs-plate",
+  "description": "AngularJS Plate",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "angular": "1.4.x",

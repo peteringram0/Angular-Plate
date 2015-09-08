@@ -7,7 +7,7 @@
 
 	/**
 	 * This should be an overview of what this factory's job is.
-	 * @author Peter Ingram <peter.ingram@hutchhouse.com>
+	 * @author Peter Ingram <peter.ingram0@gmail.com>
 	 */
 	function dataServiceFactory() {
 
@@ -23,7 +23,7 @@
 		/**
 		 * Adds to the posts array
 		 *
-		 * @author Peter Ingram <peter.ingram@hutchhouse.com>
+		 * @author Peter Ingram <peter.ingram0@gmail.com>
 		 * @param  {[type]} type [description]
 		 * @param  {[type]} data [description]
 		 */
@@ -34,7 +34,7 @@
 		/**
 		 * Returns the post array
 		 *
-		 * @author Peter Ingram <peter.ingram@hutchhouse.com>
+		 * @author Peter Ingram <peter.ingram0@gmail.com>
 		 * @return {[type]} [description]
 		 */
 		function getPosts() {

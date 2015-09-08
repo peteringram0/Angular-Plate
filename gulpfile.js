@@ -24,7 +24,7 @@
  * - Run 'NODE_ENV=prod gulp everything'
  *
  *
- * @author Peter Ingram <peter.ingram@hutchhouse.com>
+ * @author Peter Ingram <peter.ingram0@gmail.com>
  */
 
 /**
@@ -61,7 +61,7 @@ var appName = 'theme';
 /**
  * Should match the host file entry
  */
-var hostLocation = 'angularjsboilerplate.dev';
+var hostLocation = 'angularjsplate.dev';
 
 /**
  * Used by browser sync to trigger page reloads
@@ -123,7 +123,7 @@ gulp.task('styles', function() {
 		.pipe(sass({
 			includePaths: [
 				bower + '/bootstrap-sass-official/assets/stylesheets',
-				bower + '/fontawesome/scss',
+				bower + '/fontawesome/scss'
 			]
 		}))
 		//.pipe(gulpif(productionMode, concatCss(appName + '.css')))
