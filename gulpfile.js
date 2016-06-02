@@ -32,7 +32,7 @@
  */
 var gulp = require('gulp'),
 	watch = require('gulp-watch'),
-	sass = require('gulp-sass'),
+	sass = require('gulp-scss'),
 	notify = require('gulp-notify'),
 	concat = require('gulp-concat'),
 	rename = require('gulp-rename'),
