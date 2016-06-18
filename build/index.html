@@ -33,20 +33,20 @@
 
     <!-- @if ENV='dev' -->
     <script src="/js/vendor.min.js"></script>
-    <script src="/partials/partials.min.js"></script>
-    <script src="/js/theme.js"></script>
+    <script src="/js/partials.min.js"></script>
+    <script src="/js/app.js"></script>
     <!-- @endif -->
 
     <!-- @if ENV='homedev' -->
     <script src="/js/vendor.min.js"></script>
-    <script src="/partials/partials.min.js"></script>
-    <script src="/js/theme.js"></script>
+    <script src="/js/partials.min.js"></script>
+    <script src="/js/app.js"></script>
     <!-- @endif -->
 
     <!-- @if ENV='prod' -->
     <script src="/js/vendor.min.js?v=<!--@echo RELEASE_TAG-->"></script>
-    <script src="/partials/partials.min.js?v=<!--@echo RELEASE_TAG-->"></script>
-    <script src="/js/theme.min.js?v=<!--@echo RELEASE_TAG-->"></script>
+    <script src="/js/partials.min.js?v=<!--@echo RELEASE_TAG-->"></script>
+    <script src="/js/app.min.js?v=<!--@echo RELEASE_TAG-->"></script>
     <!-- @endif -->
 
 </body>
