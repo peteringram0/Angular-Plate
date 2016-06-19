@@ -3,4 +3,4 @@
 /dist
 /.idea
 npm-debug.log
-.gulp-scss-cache
+/.gulp-scss-cache

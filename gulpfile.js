@@ -28,6 +28,7 @@ var del = require('del');
 var browserSync = require('browser-sync');
 var git = require('git-rev');
 var plugins = require('gulp-load-plugins')();
+var historyApiFallback = require('connect-history-api-fallback');
 
 var settings = {
 	scripts: ['build/**/*.js', '!build/assets/*.js'],
@@ -40,9 +41,6 @@ var settings = {
 	hostLocation: 'angularjsplate.dev' // Should match the host file entry
 };
 
-/**
- * Used by browser sync to trigger page reloads
- */
 var reload = browserSync.reload;
 
 /**
@@ -97,6 +95,7 @@ gulp.task('styles', function() {
 		.pipe(plugins.if(productionMode, plugins.rename({suffix: '.min'})))
 		.pipe(plugins.if(productionMode, plugins.minifyCss()))
 		.pipe(plugins.if(productionMode, gulp.dest('dist/css')))
+		.pipe(reload({stream: true}));
 });
 
 /**
@@ -116,7 +115,7 @@ gulp.task('scripts', function() {
 		.pipe(plugins.if(productionMode, plugins.uglify({mangle: false})))
 		.pipe(plugins.if(productionMode, plugins.rename({suffix: '.min'})))
 		.pipe(plugins.if(productionMode, gulp.dest('dist/js')))
-		.pipe(browserSync.reload({stream: true}));
+		.pipe(reload({stream: true}));
 
 });
 
@@ -139,14 +138,16 @@ gulp.task('html', function() {
 		.pipe(plugins.concat("partials.js"))
 		.pipe(plugins.rename({suffix: '.min'}))
 		.pipe(plugins.uglify())
-		.pipe(gulp.dest("./dist/js"));
+		.pipe(gulp.dest("./dist/js"))
+		.pipe(reload({stream: true}));
 
 	/**
 	 * Move the main index.html page
 	 */
-	gulp.src('./build/index.html')
+	gulp.src(settings.index)
 		.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
-		.pipe(gulp.dest('dist'));
+		.pipe(gulp.dest('dist'))
+		.pipe(reload({stream: true}));
 
 });
 
@@ -159,28 +160,18 @@ gulp.task('concatvendor', function() {
 		.pipe(plugins.concat('vendor.min.js'))
 		.pipe(plugins.if(productionMode, plugins.uglify({mangle: false})))
 		.pipe(gulp.dest('dist/js'))
-		.pipe(browserSync.reload({stream: true}));
-});
-
-/**
- * This task watches all the specified area's, on any change it will run the associated task then trigger
- * a browersync reload.
- */
-gulp.task('watch', ['browser-sync'], function() {
-	plugins.watch('build/styles/**/*.scss', ['styles', browserSync.reload]);
-	plugins.watch('build/**/*.js', ['scripts', browserSync.reload]);
-	plugins.watch('build/images/**/*.*', ['images', browserSync.reload]);
-	plugins.watch('build/**/*.tpl.html', ['html', browserSync.reload]);
-	plugins.watch('build/index.html', ['html', browserSync.reload]);
-	plugins.watch('build/**/*.test.js', ['scripts']);
+		.pipe(reload({stream: true}));
 });
 
 /**
  * Browser-sync setup task
  */
 gulp.task('browser-sync', function() {
-	browserSync.init(null, {
-		proxy: settings.hostLocation
+	browserSync.init({
+		server: {
+			baseDir: "dist",
+			middleware: [ historyApiFallback() ]
+		}
 	});
 });
 
@@ -189,8 +180,18 @@ gulp.task('browser-sync', function() {
  */
 gulp.task('assets', function() {
 	return gulp.src(settings.assets)
-		// .pipe(plugins.chmod(755))
 		.pipe(gulp.dest('dist'));
+});
+
+/**
+ * This task watches all the specified area's, on any change it will run the associated task then trigger
+ * a browersync reload.
+ */
+gulp.task('watch', ['browser-sync'], function() {
+	gulp.watch('build/styles/**/*.scss', ['styles']);
+	gulp.watch(settings.scripts, ['scripts']);
+	gulp.watch(settings.assets, ['assets']);
+	gulp.watch([settings.index,settings.partials], ['html']);
 });
 
 /**
@@ -204,6 +205,4 @@ gulp.task('everything', function() {
  * Default task that is run when you just run gulp on its own. Will first kick off browser-sync then run everything
  * followed by the watch function that will in turn trigger gulp functions on changes
  */
-gulp.task('default', ['clean', 'releaseTag', 'everything', 'watch', 'browser-sync'], function() {
-});
-
+gulp.task('default', ['clean', 'releaseTag', 'everything', 'watch'], function() { });
