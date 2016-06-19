@@ -29,6 +29,10 @@ var browserSync = require('browser-sync');
 var git = require('git-rev');
 var plugins = require('gulp-load-plugins')();
 var historyApiFallback = require('connect-history-api-fallback');
+var es = require('event-stream');
+var streamqueue = require('streamqueue');
+
+var series = require('stream-series');
 
 var settings = {
 	scripts: ['build/**/*.js', '!build/assets/*.js'],
@@ -41,6 +45,8 @@ var settings = {
 };
 
 var reload = browserSync.reload;
+
+var pipes = {};
 
 /**
  * Environments. There are two current types on environments in this app
@@ -97,34 +103,46 @@ gulp.task('styles', function() {
 		.pipe(reload({stream: true}));
 });
 
+gulp.task('test', function() {
+
+	return streamqueue({objectMode: true},
+		gulp.src(settings.vendor),
+		gulp.src(settings.partials)
+			.pipe(plugins.ngHtml2js({
+				moduleName: "partials"
+			})),
+		gulp.src(settings.scripts)
+			.pipe(plugins.order(settings.scriptsOrder), {base: 'build/'})
+	)
+		.pipe(plugins.concat('app.js'))
+		.pipe(gulp.dest('dist'))
+
+});
+
 /**
  * All our scripts are concatanated and created as APPNAME.js
  * Note: added in order which will process app.js first then everything else
  */
 gulp.task('scripts', function() {
 
-	return gulp.src(settings.scripts)
-		.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
-		.pipe(plugins.order(settings.scriptsOrder), {base: 'build/'})
-		.pipe(plugins.plumber({
-			errorHandler: onError
-		}))
-		.pipe(plugins.concat('app.js'))
-		.pipe(plugins.if(!productionMode, gulp.dest('dist')))
-		.pipe(plugins.if(productionMode, plugins.uglify({mangle: false})))
-		.pipe(plugins.if(productionMode, plugins.rename({suffix: '.min'})))
-		.pipe(plugins.if(productionMode, gulp.dest('dist')))
-		.pipe(reload({stream: true}));
+	// return gulp.src(settings.scripts)
+	// 	.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
+	// 	.pipe(plugins.order(settings.scriptsOrder), {base: 'build/'})
+	// 	.pipe(plugins.plumber({
+	// 		errorHandler: onError
+	// 	}))
+	// 	.pipe(plugins.concat('app.js'))
+	// 	.pipe(plugins.if(!productionMode, gulp.dest('dist')))
+	// 	.pipe(plugins.if(productionMode, plugins.uglify({mangle: false})))
+	// 	.pipe(plugins.if(productionMode, plugins.rename({suffix: '.min'})))
+	// 	.pipe(plugins.if(productionMode, gulp.dest('dist')))
+	// 	.pipe(reload({stream: true}));
 
 });
 
 /**
- * Gulp cleaning task deletes the whole dist directory ready for the other scripts to re-build it
+ * HTML
  */
-gulp.task('clean', function(cb) {
-	del(['dist/'], cb);
-});
-
 gulp.task('html', function() {
 
 	/**
@@ -151,6 +169,13 @@ gulp.task('html', function() {
 });
 
 /**
+ * Gulp cleaning task deletes the whole dist directory ready for the other scripts to re-build it
+ */
+gulp.task('clean', function(cb) {
+	del(['dist/'], cb);
+});
+
+/**
  * gets all the bower files (From the bower.json list), excluding any that are specified within bower.json
  * and concatanates them all into a vendor.js file.
  */
@@ -169,7 +194,7 @@ gulp.task('browser-sync', function() {
 	browserSync.init({
 		server: {
 			baseDir: "dist",
-			middleware: [ historyApiFallback() ]
+			middleware: [historyApiFallback()]
 		}
 	});
 });
@@ -190,7 +215,7 @@ gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch('build/styles/**/*.scss', ['styles']);
 	gulp.watch(settings.scripts, ['scripts']);
 	gulp.watch(settings.assets, ['assets']);
-	gulp.watch([settings.index,settings.partials], ['html']);
+	gulp.watch([settings.index, settings.partials], ['html']);
 });
 
 /**
@@ -204,4 +229,5 @@ gulp.task('everything', function() {
  * Default task that is run when you just run gulp on its own. Will first kick off browser-sync then run everything
  * followed by the watch function that will in turn trigger gulp functions on changes
  */
-gulp.task('default', ['clean', 'releaseTag', 'everything', 'watch'], function() { });
+gulp.task('default', ['clean', 'releaseTag', 'everything', 'watch'], function() {
+});

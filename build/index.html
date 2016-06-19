@@ -32,20 +32,14 @@
     <div ui-view></div>
 
     <!-- @if ENV='dev' -->
-    <script src="/vendor.min.js"></script>
-    <script src="/partials.min.js"></script>
-    <script src="/app.js"></script>
-    <!-- @endif -->
-
-    <!-- @if ENV='homedev' -->
-    <script src="/vendor.min.js"></script>
-    <script src="/partials.min.js"></script>
+    <!--<script src="/vendor.min.js"></script>-->
+    <!--<script src="/partials.min.js"></script>-->
     <script src="/app.js"></script>
     <!-- @endif -->
 
     <!-- @if ENV='prod' -->
-    <script src="/vendor.min.js?v=<!--@echo RELEASE_TAG-->"></script>
-    <script src="/partials.min.js?v=<!--@echo RELEASE_TAG-->"></script>
+    <!--<script src="/vendor.min.js?v=&lt;!&ndash;@echo RELEASE_TAG&ndash;&gt;"></script>-->
+    <!--<script src="/partials.min.js?v=&lt;!&ndash;@echo RELEASE_TAG&ndash;&gt;"></script>-->
     <script src="/app.min.js?v=<!--@echo RELEASE_TAG-->"></script>
     <!-- @endif -->
 
