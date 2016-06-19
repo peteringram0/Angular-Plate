@@ -37,8 +37,7 @@ var settings = {
 	partials: ['build/**/*.tpl.html', '!build/index.html'],
 	styles: 'build/styles/styles.scss',
 	assets: 'build/assets/**/*.*',
-	index: 'build/index.html',
-	hostLocation: 'angularjsplate.dev' // Should match the host file entry
+	index: 'build/index.html'
 };
 
 var reload = browserSync.reload;
@@ -91,10 +90,10 @@ gulp.task('styles', function() {
 		.pipe(plugins.plumber({
 			errorHandler: onError
 		}))
-		.pipe(plugins.if(!productionMode, gulp.dest('dist/css')))
+		.pipe(plugins.if(!productionMode, gulp.dest('dist')))
 		.pipe(plugins.if(productionMode, plugins.rename({suffix: '.min'})))
 		.pipe(plugins.if(productionMode, plugins.minifyCss()))
-		.pipe(plugins.if(productionMode, gulp.dest('dist/css')))
+		.pipe(plugins.if(productionMode, gulp.dest('dist')))
 		.pipe(reload({stream: true}));
 });
 
@@ -111,10 +110,10 @@ gulp.task('scripts', function() {
 			errorHandler: onError
 		}))
 		.pipe(plugins.concat('app.js'))
-		.pipe(plugins.if(!productionMode, gulp.dest('dist/js')))
+		.pipe(plugins.if(!productionMode, gulp.dest('dist')))
 		.pipe(plugins.if(productionMode, plugins.uglify({mangle: false})))
 		.pipe(plugins.if(productionMode, plugins.rename({suffix: '.min'})))
-		.pipe(plugins.if(productionMode, gulp.dest('dist/js')))
+		.pipe(plugins.if(productionMode, gulp.dest('dist')))
 		.pipe(reload({stream: true}));
 
 });
@@ -138,7 +137,7 @@ gulp.task('html', function() {
 		.pipe(plugins.concat("partials.js"))
 		.pipe(plugins.rename({suffix: '.min'}))
 		.pipe(plugins.uglify())
-		.pipe(gulp.dest("./dist/js"))
+		.pipe(gulp.dest("dist"))
 		.pipe(reload({stream: true}));
 
 	/**
@@ -159,7 +158,7 @@ gulp.task('concatvendor', function() {
 	return gulp.src(settings.vendor)
 		.pipe(plugins.concat('vendor.min.js'))
 		.pipe(plugins.if(productionMode, plugins.uglify({mangle: false})))
-		.pipe(gulp.dest('dist/js'))
+		.pipe(gulp.dest('dist'))
 		.pipe(reload({stream: true}));
 });
 
