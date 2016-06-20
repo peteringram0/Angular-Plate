@@ -52,7 +52,7 @@ gulp.task('styles', function() {
 
 	var styleFiles = gulp.src(settings.styles)
 		.pipe(plugins.if(!productionMode, plugins.sourcemaps.init()))
-		.pipe(plugins.scss({noCache: true}))
+		.pipe(plugins.stylus())
 		.pipe(plugins.if(!productionMode, plugins.sourcemaps.write()))
 		.pipe(plugins.plumber({
 			errorHandler: onError
@@ -126,7 +126,7 @@ gulp.task('assets', function() {
 
 // Watch everything
 gulp.task('watch', ['browser-sync'], function() {
-	gulp.watch('src/styles/**/*.scss', ['styles']);
+	gulp.watch('src/**/*.styl', ['styles']);
 	gulp.watch(settings.partials, ['scripts']);
 	gulp.watch(settings.scripts, ['scripts']);
 	gulp.watch(settings.assets, ['assets']);

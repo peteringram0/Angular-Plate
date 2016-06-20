@@ -4,6 +4,11 @@ Angular 1 Boilerplate
 
 ![alt tag](https://media.giphy.com/media/uGlLP7Ze3pPAk/giphy.gif)
 
+Setup:
+```shell
+$ npm i
+````
+
 Development:
 ```shell
 $ gulp
@@ -19,3 +24,4 @@ Features:
 * SCSS
 * Vendor JS & CSS managed within package.json file
 * John Papa Angualr1 style guide
+* Watches and re-loads all files
