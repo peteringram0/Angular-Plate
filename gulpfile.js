@@ -12,7 +12,6 @@
  * ::DEV ENVIROMENT::
  * - Run 'gulp' on its own or 'NODE_ENV=dev gulp'
  *
- *
  * ::PRODUCTION ENVIROMENT:: (Watch function will not run and minified files will be loaded)
  * - Run 'NODE_ENV=prod gulp everything'
  *
@@ -29,10 +28,7 @@ var browserSync = require('browser-sync');
 var git = require('git-rev');
 var plugins = require('gulp-load-plugins')();
 var historyApiFallback = require('connect-history-api-fallback');
-var es = require('event-stream');
 var streamqueue = require('streamqueue');
-
-var series = require('stream-series');
 
 var settings = {
 	scripts: ['build/**/*.js', '!build/assets/*.js'],
@@ -103,40 +99,30 @@ gulp.task('styles', function() {
 		.pipe(reload({stream: true}));
 });
 
-gulp.task('test', function() {
-
-	return streamqueue({objectMode: true},
-		gulp.src(settings.vendor),
-		gulp.src(settings.partials)
-			.pipe(plugins.ngHtml2js({
-				moduleName: "partials"
-			})),
-		gulp.src(settings.scripts)
-			.pipe(plugins.order(settings.scriptsOrder), {base: 'build/'})
-	)
-		.pipe(plugins.concat('app.js'))
-		.pipe(gulp.dest('dist'))
-
-});
-
-/**
- * All our scripts are concatanated and created as APPNAME.js
- * Note: added in order which will process app.js first then everything else
- */
 gulp.task('scripts', function() {
 
-	// return gulp.src(settings.scripts)
-	// 	.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
-	// 	.pipe(plugins.order(settings.scriptsOrder), {base: 'build/'})
-	// 	.pipe(plugins.plumber({
-	// 		errorHandler: onError
-	// 	}))
-	// 	.pipe(plugins.concat('app.js'))
-	// 	.pipe(plugins.if(!productionMode, gulp.dest('dist')))
-	// 	.pipe(plugins.if(productionMode, plugins.uglify({mangle: false})))
-	// 	.pipe(plugins.if(productionMode, plugins.rename({suffix: '.min'})))
-	// 	.pipe(plugins.if(productionMode, gulp.dest('dist')))
-	// 	.pipe(reload({stream: true}));
+	var vendorFiles = gulp.src(settings.vendor)
+		.pipe(plugins.if(productionMode, plugins.uglify({mangle: false})));
+
+	var partialFiles = gulp.src(settings.partials)
+		.pipe(plugins.ngHtml2js({
+			moduleName: "partials"
+		}))
+		.pipe(plugins.if(productionMode, plugins.uglify()));
+
+	var scriptFiles = gulp.src(settings.scripts)
+		.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
+		.pipe(plugins.order(settings.scriptsOrder), {base: 'build/'})
+		.pipe(plugins.plumber({
+			errorHandler: onError
+		}))
+		.pipe(plugins.concat('app.js'))
+		.pipe(plugins.if(productionMode, plugins.uglify({mangle: false})));
+
+	return streamqueue({objectMode: true}, vendorFiles, partialFiles, scriptFiles)
+		.pipe(plugins.concat('app.js'))
+		.pipe(gulp.dest('dist'))
+		.pipe(reload({stream: true}));
 
 });
 
@@ -144,19 +130,6 @@ gulp.task('scripts', function() {
  * HTML
  */
 gulp.task('html', function() {
-
-	/**
-	 * All .tpl files
-	 */
-	gulp.src(settings.partials)
-		.pipe(plugins.ngHtml2js({
-			moduleName: "partials"
-		}))
-		.pipe(plugins.concat("partials.js"))
-		.pipe(plugins.rename({suffix: '.min'}))
-		.pipe(plugins.uglify())
-		.pipe(gulp.dest("dist"))
-		.pipe(reload({stream: true}));
 
 	/**
 	 * Move the main index.html page
@@ -173,18 +146,6 @@ gulp.task('html', function() {
  */
 gulp.task('clean', function(cb) {
 	del(['dist/'], cb);
-});
-
-/**
- * gets all the bower files (From the bower.json list), excluding any that are specified within bower.json
- * and concatanates them all into a vendor.js file.
- */
-gulp.task('concatvendor', function() {
-	return gulp.src(settings.vendor)
-		.pipe(plugins.concat('vendor.min.js'))
-		.pipe(plugins.if(productionMode, plugins.uglify({mangle: false})))
-		.pipe(gulp.dest('dist'))
-		.pipe(reload({stream: true}));
 });
 
 /**
@@ -213,6 +174,7 @@ gulp.task('assets', function() {
  */
 gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch('build/styles/**/*.scss', ['styles']);
+	gulp.watch(settings.partials, ['scripts']);
 	gulp.watch(settings.scripts, ['scripts']);
 	gulp.watch(settings.assets, ['assets']);
 	gulp.watch([settings.index, settings.partials], ['html']);
@@ -222,7 +184,7 @@ gulp.task('watch', ['browser-sync'], function() {
  * Runs the clean task first then runs everything needed to build up that target directory
  */
 gulp.task('everything', function() {
-	gulp.start('assets', 'styles', 'html', 'scripts', 'concatvendor');
+	gulp.start('assets', 'styles', 'html', 'scripts');
 });
 
 /**

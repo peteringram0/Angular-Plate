@@ -21,3 +21,4 @@
 	angular.module('app.controllers', []);
 
 })();
+

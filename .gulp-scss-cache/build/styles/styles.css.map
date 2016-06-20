@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AACA,GAAI,CACH,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI",
-"sources": ["../../../build/styles/styles.scss"],
-"names": [],
-"file": "styles.css"
-}

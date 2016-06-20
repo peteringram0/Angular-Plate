@@ -18,7 +18,6 @@
     "browser-sync": "latest",
     "connect-history-api-fallback": "^1.2.0",
     "del": "latest",
-    "event-stream": "^3.3.3",
     "git-rev": "latest",
     "gulp": "latest",
     "gulp-angular-filesort": "^1.1.1",
@@ -55,7 +54,6 @@
     "protractor": "latest",
     "requirejs": "latest",
     "shelljs": "latest",
-    "stream-series": "^0.1.1",
     "streamqueue": "^1.1.1"
   }
 }

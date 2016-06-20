@@ -14,34 +14,14 @@
 
     <base href="/">
 
-    <!-- @if ENV='dev' -->
     <link rel="stylesheet" href="/styles.css">
-    <!-- @endif -->
-
-    <!-- @if ENV='homedev' -->
-    <link rel="stylesheet" href="/styles.css">
-    <!-- @endif -->
-
-    <!-- @if ENV='prod' -->
-    <link rel="stylesheet" href="/theme.min.css?v=<!--@echo RELEASE_TAG-->">
-    <!-- @endif -->
 
 </head>
 <body>
 
     <div ui-view></div>
 
-    <!-- @if ENV='dev' -->
-    <!--<script src="/vendor.min.js"></script>-->
-    <!--<script src="/partials.min.js"></script>-->
-    <script src="/app.js"></script>
-    <!-- @endif -->
-
-    <!-- @if ENV='prod' -->
-    <!--<script src="/vendor.min.js?v=&lt;!&ndash;@echo RELEASE_TAG&ndash;&gt;"></script>-->
-    <!--<script src="/partials.min.js?v=&lt;!&ndash;@echo RELEASE_TAG&ndash;&gt;"></script>-->
-    <script src="/app.min.js?v=<!--@echo RELEASE_TAG-->"></script>
-    <!-- @endif -->
+    <script src="/app.js?v=<!--@echo RELEASE_TAG-->"></script>
 
 </body>
 </html>
