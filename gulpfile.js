@@ -15,13 +15,10 @@
  * ::PRODUCTION ENVIROMENT:: (Watch function will not run and minified files will be loaded)
  * - Run 'NODE_ENV=prod gulp everything'
  *
- *
  * @author Peter Ingram <peter.ingram0@gmail.com>
  */
 
-/**
- * Declare dependencies
- */
+// Dependencies
 var gulp = require('gulp');
 var del = require('del');
 var browserSync = require('browser-sync');
@@ -32,31 +29,15 @@ var streamqueue = require('streamqueue');
 var packageJSON = require('./package.json');
 var settings = packageJSON.settings;
 
+// Settings
 var reload = browserSync.reload;
-
-/**
- * Environments. There are two current types on environments in this app
- *
- * dev || prod
- */
-var ENV = process.env.NODE_ENV || 'dev';
-
-/**
- * On error function, leave blank as we want to use plumber reporting
- */
-var onError = function(err) {
-};
-
-/**
- * Production mode is true or false, used for gulp-if on tasks
- */
-var productionMode = ((ENV === 'prod') ? true : false);
-
-/**
- * Function will look at GIT and get the current tag release. This is then appended as
- * a version number on the scripts within the index.html page.
- */
 var RELEASE_TAG;
+var ENV = process.env.NODE_ENV || 'dev'; // Environments. dev || prod
+var onError = function(err) { }; // On error function
+var productionMode = ((ENV === 'prod') ? true : false); // Production mode is true or false, used for gulp-if on tasks
+
+// Function will look at GIT and get the current tag release. This is then appended as a version number
+// on the scripts within the index.html page.
 gulp.task('releaseTag', function(done) {
 	git.tag(function(str) {
 		RELEASE_TAG = str || 0;
@@ -64,12 +45,7 @@ gulp.task('releaseTag', function(done) {
 	});
 });
 
-/**
- * Styles gulp task, used for only our styles.scss file.
- *
- * We have two tasks for styles. One produces a min and the other a full with a source map.
- * This is as you can minify after producing a sourcemap and we want the other not to contain the map.
- */
+// Styles
 gulp.task('styles', function() {
 	return gulp.src(settings.styles)
 		.pipe(plugins.if(!productionMode, plugins.sourcemaps.init()))
@@ -82,13 +58,12 @@ gulp.task('styles', function() {
 		.pipe(plugins.plumber({
 			errorHandler: onError
 		}))
-		.pipe(plugins.if(!productionMode, gulp.dest('dist')))
-		.pipe(plugins.if(productionMode, plugins.rename({suffix: '.min'})))
 		.pipe(plugins.if(productionMode, plugins.minifyCss()))
 		.pipe(plugins.if(productionMode, gulp.dest('dist')))
 		.pipe(reload({stream: true}));
 });
 
+// Run though all the scripts, vendor, partials and app scripts
 gulp.task('scripts', function() {
 
 	var vendorFiles = gulp.src(settings.vendor)
@@ -116,31 +91,20 @@ gulp.task('scripts', function() {
 
 });
 
-/**
- * HTML
- */
+// Move and process the main index.html page
 gulp.task('html', function() {
-
-	/**
-	 * Move the main index.html page
-	 */
 	gulp.src(settings.index)
 		.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
 		.pipe(gulp.dest('dist'))
 		.pipe(reload({stream: true}));
-
 });
 
-/**
- * Gulp cleaning task deletes the whole dist directory ready for the other scripts to re-build it
- */
+// Gulp cleaning task deletes the whole dist directory ready for the other scripts to re-build it
 gulp.task('clean', function(cb) {
 	del(['dist/'], cb);
 });
 
-/**
- * Browser-sync setup task
- */
+// Browser-sync setup task
 gulp.task('browser-sync', function() {
 	browserSync.init({
 		server: {
@@ -150,18 +114,13 @@ gulp.task('browser-sync', function() {
 	});
 });
 
-/**
- * Move Assets file
- */
+// Move Assets file
 gulp.task('assets', function() {
 	return gulp.src(settings.assets)
 		.pipe(gulp.dest('dist'));
 });
 
-/**
- * This task watches all the specified area's, on any change it will run the associated task then trigger
- * a browersync reload.
- */
+// Watch everything
 gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch('build/styles/**/*.scss', ['styles']);
 	gulp.watch(settings.partials, ['scripts']);
@@ -170,16 +129,10 @@ gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch([settings.index, settings.partials], ['html']);
 });
 
-/**
- * Runs the clean task first then runs everything needed to build up that target directory
- */
-gulp.task('everything', function() {
+// Build the app
+gulp.task('build', function() {
 	gulp.start('assets', 'styles', 'html', 'scripts');
 });
 
-/**
- * Default task that is run when you just run gulp on its own. Will first kick off browser-sync then run everything
- * followed by the watch function that will in turn trigger gulp functions on changes
- */
-gulp.task('default', ['clean', 'releaseTag', 'everything', 'watch'], function() {
-});
+// Default task
+gulp.task('default', ['clean', 'releaseTag', 'build', 'watch']);
