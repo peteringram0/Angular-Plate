@@ -10,10 +10,10 @@
  \_____\____/|_|  |_|_|  |_/_/    \_\_| \_|_____/|_____/
  *
  * ::DEV ENVIROMENT::
- * - Run 'gulp' on its own or 'NODE_ENV=dev gulp'
+ * - Run 'gulp''
  *
  * ::PRODUCTION ENVIROMENT:: (Watch function will not run and minified files will be loaded)
- * - Run 'NODE_ENV=prod gulp everything'
+ * - Run 'NODE_ENV=prod gulp build'
  *
  * @author Peter Ingram <peter.ingram0@gmail.com>
  */
@@ -30,8 +30,8 @@ var packageJSON = require('./package.json');
 var settings = packageJSON.settings;
 
 // Settings
-var reload = browserSync.reload;
-var RELEASE_TAG;
+var reload = browserSync.reload; // Reload browserSync
+var RELEASE_TAG; // Gets loaded from the GIT version on production builds (Makes sure when the app is updated its never cached)
 var ENV = process.env.NODE_ENV || 'dev'; // Environments. dev || prod
 var onError = function(err) { }; // On error function
 var productionMode = ((ENV === 'prod') ? true : false); // Production mode is true or false, used for gulp-if on tasks
@@ -47,20 +47,23 @@ gulp.task('releaseTag', function(done) {
 
 // Styles
 gulp.task('styles', function() {
-	return gulp.src(settings.styles)
+
+	var vendorFiles = gulp.src(settings.vendorStyles);
+
+	var styleFiles = gulp.src(settings.styles)
 		.pipe(plugins.if(!productionMode, plugins.sourcemaps.init()))
-		.pipe(plugins.scss({
-			noCache: true,
-			style: 'compressed'
-		}))
-		// .pipe(plugins.if(productionMode, plugins.concatCss('app.css')))
+		.pipe(plugins.scss({noCache: true}))
 		.pipe(plugins.if(!productionMode, plugins.sourcemaps.write()))
 		.pipe(plugins.plumber({
 			errorHandler: onError
-		}))
+		}));
+
+	return streamqueue({objectMode: true}, vendorFiles, styleFiles)
+		.pipe(plugins.concatCss('styles.css'))
 		.pipe(plugins.if(productionMode, plugins.minifyCss()))
 		.pipe(gulp.dest('dist'))
 		.pipe(reload({stream: true}));
+
 });
 
 // Run though all the scripts, vendor, partials and app scripts
@@ -77,7 +80,7 @@ gulp.task('scripts', function() {
 
 	var scriptFiles = gulp.src(settings.scripts)
 		.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
-		.pipe(plugins.order(settings.scriptsOrder), {base: 'build/'})
+		.pipe(plugins.order(settings.scriptsOrder), {base: 'src/'})
 		.pipe(plugins.plumber({
 			errorHandler: onError
 		}))
@@ -94,7 +97,7 @@ gulp.task('scripts', function() {
 // Move and process the main index.html page
 gulp.task('html', function() {
 	gulp.src(settings.index)
-		// .pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
+		.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
 		.pipe(plugins.if(productionMode, plugins.htmlmin({collapseWhitespace: true})))
 		.pipe(gulp.dest('dist'))
 		.pipe(reload({stream: true}));
@@ -123,11 +126,12 @@ gulp.task('assets', function() {
 
 // Watch everything
 gulp.task('watch', ['browser-sync'], function() {
-	gulp.watch('build/styles/**/*.scss', ['styles']);
+	gulp.watch('src/styles/**/*.scss', ['styles']);
 	gulp.watch(settings.partials, ['scripts']);
 	gulp.watch(settings.scripts, ['scripts']);
 	gulp.watch(settings.assets, ['assets']);
-	gulp.watch([settings.index, settings.partials], ['html']);
+	gulp.watch(settings.partials, ['html']);
+	gulp.watch(settings.index, ['html']);
 });
 
 // Build the app

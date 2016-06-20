@@ -14,25 +14,14 @@
     "normalize.css": "^3.0.3"
   },
   "settings": {
-    "vendor": [
-      "node_modules/angular/angular.min.js",
-      "node_modules/angular-ui-router/release/angular-ui-router.min.js"
-    ],
-    "partials": [
-      "build/**/*.tpl.html",
-      "!build/index.html"
-    ],
-    "scripts": [
-      "build/**/*.js",
-      "!build/assets/*.js"
-    ],
-    "scriptsOrder": [
-      "app.js",
-      "**/*.js"
-    ],
-    "styles": "build/styles/styles.scss",
-    "assets": "build/assets/**/*.*",
-    "index": "build/index.html"
+    "vendor": ["node_modules/angular/angular.min.js", "node_modules/angular-ui-router/release/angular-ui-router.min.js"],
+    "partials": ["src/**/*.tpl.html", "!src/index.html"],
+    "scripts": ["src/**/*.js", "!src/assets/*.js"],
+    "scriptsOrder": ["app.js", "**/*.js"],
+    "vendorStyles": "node_modules/normalize.css/normalize.css",
+    "styles": "src/styles/styles.scss",
+    "assets": "src/assets/**/*.*",
+    "index": "src/index.html"
   },
   "devDependencies": {
     "browser-sync": "latest",
