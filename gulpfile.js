@@ -100,8 +100,8 @@ gulp.task('html', function() {
 });
 
 // Gulp cleaning task deletes the whole dist directory ready for the other scripts to re-build it
-gulp.task('clean', function(cb) {
-	del(['dist/'], cb);
+gulp.task('clean', function() {
+	del(['dist/']);
 });
 
 // Browser-sync setup task
@@ -130,9 +130,9 @@ gulp.task('watch', ['browser-sync'], function() {
 });
 
 // Build the app
-gulp.task('build', function() {
+gulp.task('build', ['clean', 'releaseTag'], function() {
 	gulp.start('assets', 'styles', 'html', 'scripts');
 });
 
 // Default task
-gulp.task('default', ['clean', 'releaseTag', 'build', 'watch']);
+gulp.task('default', ['build', 'watch']);
