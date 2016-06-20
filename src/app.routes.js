@@ -16,6 +16,7 @@
 		$locationProvider.html5Mode(true);
 
 		$stateProvider.state('wrapper', {
+			controller: 'wrapper as wrapper',
 			templateUrl: 'wrapper/wrapper.tpl.html'
 		});
 
