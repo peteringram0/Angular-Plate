@@ -35,12 +35,17 @@
     "index": "build/index.html"
   },
   "devDependencies": {
+    "browser-sync": "latest",
+    "connect-history-api-fallback": "^1.2.0",
+    "del": "latest",
+    "git-rev": "latest",
     "gulp": "latest",
     "gulp-angular-filesort": "^1.1.1",
     "gulp-chmod": "latest",
     "gulp-clean": "latest",
     "gulp-concat": "latest",
     "gulp-concat-css": "latest",
+    "gulp-htmlmin": "^2.0.0",
     "gulp-if": "latest",
     "gulp-load-plugins": "^1.2.4",
     "gulp-minify-css": "latest",
@@ -58,10 +63,6 @@
     "jshint-stylish": "latest",
     "requirejs": "latest",
     "shelljs": "latest",
-    "streamqueue": "^1.1.1",
-    "browser-sync": "latest",
-    "connect-history-api-fallback": "^1.2.0",
-    "del": "latest",
-    "git-rev": "latest"
+    "streamqueue": "^1.1.1"
   }
 }

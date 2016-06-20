@@ -59,7 +59,7 @@ gulp.task('styles', function() {
 			errorHandler: onError
 		}))
 		.pipe(plugins.if(productionMode, plugins.minifyCss()))
-		.pipe(plugins.if(productionMode, gulp.dest('dist')))
+		.pipe(gulp.dest('dist'))
 		.pipe(reload({stream: true}));
 });
 
@@ -94,7 +94,8 @@ gulp.task('scripts', function() {
 // Move and process the main index.html page
 gulp.task('html', function() {
 	gulp.src(settings.index)
-		.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
+		// .pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
+		.pipe(plugins.if(productionMode, plugins.htmlmin({collapseWhitespace: true})))
 		.pipe(gulp.dest('dist'))
 		.pipe(reload({stream: true}));
 });
