@@ -1,6 +1,6 @@
 {
   "name": "angularjs-plate",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "authors": [
     {
@@ -13,19 +13,34 @@
     "angular-ui-router": "^0.2.18",
     "normalize.css": "^3.0.3"
   },
+  "settings": {
+    "vendor": [
+      "node_modules/angular/angular.min.js",
+      "node_modules/angular-ui-router/release/angular-ui-router.min.js"
+    ],
+    "partials": [
+      "build/**/*.tpl.html",
+      "!build/index.html"
+    ],
+    "scripts": [
+      "build/**/*.js",
+      "!build/assets/*.js"
+    ],
+    "scriptsOrder": [
+      "app.js",
+      "**/*.js"
+    ],
+    "styles": "build/styles/styles.scss",
+    "assets": "build/assets/**/*.*",
+    "index": "build/index.html"
+  },
   "devDependencies": {
-    "angular-mocks": "latest",
-    "browser-sync": "latest",
-    "connect-history-api-fallback": "^1.2.0",
-    "del": "latest",
-    "git-rev": "latest",
     "gulp": "latest",
     "gulp-angular-filesort": "^1.1.1",
     "gulp-chmod": "latest",
     "gulp-clean": "latest",
     "gulp-concat": "latest",
     "gulp-concat-css": "latest",
-    "gulp-eslint": "latest",
     "gulp-if": "latest",
     "gulp-load-plugins": "^1.2.4",
     "gulp-minify-css": "latest",
@@ -41,19 +56,12 @@
     "http-server": "latest",
     "jasmine-core": "latest",
     "jshint-stylish": "latest",
-    "karma": "latest",
-    "karma-chrome-launcher": "latest",
-    "karma-cli": "latest",
-    "karma-jasmine": "latest",
-    "karma-junit-reporter": "latest",
-    "karma-osx-reporter": "latest",
-    "karma-phantomjs-launcher": "latest",
-    "karma-requirejs": "latest",
-    "karma-script-launcher": "latest",
-    "phantomjs": "latest",
-    "protractor": "latest",
     "requirejs": "latest",
     "shelljs": "latest",
-    "streamqueue": "^1.1.1"
+    "streamqueue": "^1.1.1",
+    "browser-sync": "latest",
+    "connect-history-api-fallback": "^1.2.0",
+    "del": "latest",
+    "git-rev": "latest"
   }
 }

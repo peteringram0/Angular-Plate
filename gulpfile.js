@@ -29,20 +29,10 @@ var git = require('git-rev');
 var plugins = require('gulp-load-plugins')();
 var historyApiFallback = require('connect-history-api-fallback');
 var streamqueue = require('streamqueue');
-
-var settings = {
-	scripts: ['build/**/*.js', '!build/assets/*.js'],
-	scriptsOrder: ['app.js', '**/*.js'],
-	vendor: ['node_modules/angular/angular.min.js', 'node_modules/angular-ui-router/release/angular-ui-router.min.js'],
-	partials: ['build/**/*.tpl.html', '!build/index.html'],
-	styles: 'build/styles/styles.scss',
-	assets: 'build/assets/**/*.*',
-	index: 'build/index.html'
-};
+var packageJSON = require('./package.json');
+var settings = packageJSON.settings;
 
 var reload = browserSync.reload;
-
-var pipes = {};
 
 /**
  * Environments. There are two current types on environments in this app
