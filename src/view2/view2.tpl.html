@@ -1,1 +1,15 @@
 <p>This is the partial for view 2.</p>
+
+
+<uib-tabset active="active">
+	<uib-tab index="0" heading="Static title">Static content</uib-tab>
+	<uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}" disable="tab.disabled">
+		{{tab.content}}
+	</uib-tab>
+	<uib-tab index="3" select="alertMe()">
+		<uib-tab-heading>
+			Alert
+		</uib-tab-heading>
+		I've got an HTML heading, and a select callback. Pretty cool!
+	</uib-tab>
+</uib-tabset>

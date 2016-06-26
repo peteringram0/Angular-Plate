@@ -10,14 +10,16 @@
 			'app.filters',
 			'app.constant',
 			'ui.router',
-			'partials'
+			'ui.bootstrap',
+			'partials',
+			'ngStorage'
 		]);
 
 	angular.module('app.directive', []);
 	angular.module('app.constant', []);
 	angular.module('app.filters', []);
 	angular.module('app.routes', ['ui.router']);
-	angular.module('app.factory', []);
+	angular.module('app.factory', ['ngStorage']);
 	angular.module('app.controllers', []);
 
 })();

@@ -45,6 +45,8 @@ gulp.task('releaseTag', function(done) {
 	});
 });
 
+var bootstrap = require('bootstrap-styl');
+
 // Styles
 gulp.task('styles', function() {
 
@@ -52,7 +54,9 @@ gulp.task('styles', function() {
 
 	var styleFiles = gulp.src(settings.styles)
 		.pipe(plugins.if(!productionMode, plugins.sourcemaps.init()))
-		.pipe(plugins.stylus())
+		.pipe(plugins.stylus({
+			use: bootstrap()
+		}))
 		.pipe(plugins.if(!productionMode, plugins.sourcemaps.write()))
 		.pipe(plugins.plumber({
 			errorHandler: onError
@@ -98,7 +102,7 @@ gulp.task('scripts', function() {
 gulp.task('html', function() {
 	gulp.src(settings.index)
 		.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
-		.pipe(plugins.if(productionMode, plugins.htmlmin({collapseWhitespace: true})))
+		.pipe(plugins.if(productionMode, plugins.htmlmin()))
 		.pipe(gulp.dest('dist'))
 		.pipe(reload({stream: true}));
 });
