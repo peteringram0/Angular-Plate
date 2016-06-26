@@ -8,6 +8,7 @@
 			'app.controllers',
 			'app.directive',
 			'app.filters',
+			'app.run',
 			'app.constant',
 			'ui.router',
 			'ui.bootstrap',
@@ -18,9 +19,10 @@
 	angular.module('app.directive', []);
 	angular.module('app.constant', []);
 	angular.module('app.filters', []);
-	angular.module('app.routes', ['ui.router']);
-	angular.module('app.factory', ['ngStorage']);
 	angular.module('app.controllers', []);
+	angular.module('app.run', ['ngStorage']);
+	angular.module('app.routes', ['ui.router']);
+	angular.module('app.factory', ['ngStorage', 'ngResource']);
 
 })();
 

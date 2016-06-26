@@ -11,7 +11,7 @@
 	 */
 	function constant() {
 		return {
-			'apiURL': 'http://homestead.app'
+			'apiURL': 'http://localhost:3000'
 		};
 	}
 

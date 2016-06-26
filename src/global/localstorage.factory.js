@@ -15,37 +15,25 @@
 	 */
 	function localStorage($localStorage) {
 
-		var localStorageObj = {
-			user: {}
-		};
+		var localStorageObj = {};
 
 		var service = {
 			addLocal: addLocal,
 			getStorage: getStorage,
 			deleteLocal: deleteLocal,
 			preLoad: preLoad,
-			deleteAllLocal: deleteAllLocal,
-			deleteAllLocalExceptUser: deleteAllLocalExceptUser,
+			deleteAllLocal: deleteAllLocal
 		};
 
 		return service;
 
 		/**
 		 * Add the item to local storage and the local object
-		 * @author Peter Ingram <peter.ingram@hutchhouse.com>
 		 */
 		function addLocal(key, val) {
 
-			//$localStorage[key] = val;
+			$localStorage[key] = val;
 			localStorageObj[key] = val;
-
-			/**
-			 * If we are dealing with the user object add this to the $localStorage.
-			 * Everything else just needs to go into memory
-			 */
-			if(key === 'user') {
-				$localStorage[key] = val;
-			}
 
 		}
 
@@ -57,31 +45,16 @@
 		}
 
 		/**
-		 * Delete All keys from the localStorage object and the $localStorage. Run though in a foreach so that we dont delete
-		 * the parent object ref. So angular continues to dynamically update
+		 * Delete All keys from the localStorage object and the $localStorage.
 		 */
 		function deleteAllLocal() {
 
-			$localStorage.$reset({
-				laqViewed: localStorageObj.laqViewed
-			});
+			$localStorage.$reset();
 
 			angular.forEach(localStorageObj, function(value, key) {
-				if(key !== 'laqViewed')
-					delete localStorageObj[key];
+				delete localStorageObj[key];
 			});
 
-		}
-
-		/**
-		 * Delete everything local apart from $localStorage.user and localStorageObj.user
-		 */
-		function deleteAllLocalExceptUser() {
-			angular.forEach(localStorageObj, function(value, key) {
-				if(key !== 'user') {
-					delete localStorageObj[key];
-				}
-			});
 		}
 
 		/**
@@ -95,25 +68,12 @@
 		 * This function will run when you first load the page, its job is to check in your local storage and move everything
 		 * into the factory object (so that the factory object is the same as the localStorage). Every update from then on
 		 * will update in both places so everything is aligned.
-		 *
-		 * @author Peter Ingram <peter.ingram@hutchhouse.com>
 		 */
 		function preLoad() {
 
-			/**
-			 * Move user from localStorage to the factory
-			 */
-			localStorageObj.user = $localStorage.user;
-
-			/**
-			 * Move the favetracks count
-			 */
-			localStorageObj.faveTracksCount = $localStorage.faveTracksCount;
-
-			/**
-			 * Low Quality Alert Viewed
-			 */
-			localStorageObj.laqViewed = $localStorage.laqViewed;
+			angular.forEach($localStorage, function(value, key) {
+				localStorageObj[key] = value
+			});
 
 		}
 

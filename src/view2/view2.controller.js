@@ -7,6 +7,8 @@
 
 	function view2() {
 
+		var vm = this;
+		
 	}
 
 })();

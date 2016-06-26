@@ -25,3 +25,8 @@ Features:
 * Vendor JS & Stylus managed within package.json settings
 * John Papa Angualr1 style guide
 * Watches and re-loads all files
+
+API: To run a mock API
+```shell
+$ json-server --watch db.json
+````
