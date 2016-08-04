@@ -2,6 +2,10 @@
   "name": "angularjs-plate",
   "version": "0.3.0",
   "private": false,
+  "scripts": {
+    "webdriver-start": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/webdriver-manager start",
+    "protractor": "./node_modules/protractor/bin/protractor ./tests/protractor.conf.js"
+  },
   "authors": [
     {
       "name": "Peter Ingram",
@@ -40,22 +44,24 @@
     "vendorStyles": "",
     "styles": "src/styles/styles.styl",
     "assets": "src/assets/**/*.*",
-    "index": "src/index.html"
+    "index": "src/index.html",
+    "hostLocation": "http://127.0.0.1"
   },
   "devDependencies": {
+    "autoprefixer-stylus": "latest",
     "browser-sync": "latest",
-    "connect-history-api-fallback": "^1.2.0",
+    "connect-history-api-fallback": "latest",
     "del": "latest",
     "git-rev": "latest",
     "gulp": "latest",
-    "gulp-angular-filesort": "^1.1.1",
+    "gulp-angular-filesort": "latest",
     "gulp-chmod": "latest",
     "gulp-clean": "latest",
     "gulp-concat": "latest",
     "gulp-concat-css": "latest",
-    "gulp-htmlmin": "^2.0.0",
+    "gulp-htmlmin": "latest",
     "gulp-if": "latest",
-    "gulp-load-plugins": "^1.2.4",
+    "gulp-load-plugins": "latest",
     "gulp-minify-css": "latest",
     "gulp-ng-html2js": "latest",
     "gulp-order": "latest",
@@ -63,14 +69,15 @@
     "gulp-preprocess": "latest",
     "gulp-rename": "latest",
     "gulp-sourcemaps": "latest",
-    "gulp-stylus": "^2.4.0",
+    "gulp-stylus": "latest",
     "gulp-uglify": "latest",
+    "gulp-util": "latest",
     "gulp-watch": "latest",
     "http-server": "latest",
     "jasmine-core": "latest",
     "jshint-stylish": "latest",
     "requirejs": "latest",
     "shelljs": "latest",
-    "streamqueue": "^1.1.1"
+    "streamqueue": "latest"
   }
 }

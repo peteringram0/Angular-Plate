@@ -10,42 +10,60 @@
  \_____\____/|_|  |_|_|  |_/_/    \_\_| \_|_____/|_____/
  *
  * ::DEV ENVIROMENT::
- * - Run 'gulp''
+ * - Run 'gulp'
  *
  * ::PRODUCTION ENVIROMENT:: (Watch function will not run and minified files will be loaded)
- * - Run 'NODE_ENV=prod gulp build'
+ * - Run 'gulp build --production'
  *
  * @author Peter Ingram <peter.ingram0@gmail.com>
+ *
+ * ## Version 2.1 ##
+ * * Environment var's within JS files
+ * * Pauses on stylus errors
+ * * Fix issue with autoprefixer
  */
 
-// Dependencies
+	// Dependencies
 var gulp = require('gulp');
 var del = require('del');
 var browserSync = require('browser-sync');
 var git = require('git-rev');
 var plugins = require('gulp-load-plugins')();
-var historyApiFallback = require('connect-history-api-fallback');
 var streamqueue = require('streamqueue');
+var bootstrap = require('bootstrap-styl');
+var autoprefixer = require('autoprefixer-stylus');
 var packageJSON = require('./package.json');
 var settings = packageJSON.settings;
 
 // Settings
 var reload = browserSync.reload; // Reload browserSync
 var RELEASE_TAG; // Gets loaded from the GIT version on production builds (Makes sure when the app is updated its never cached)
-var ENV = process.env.NODE_ENV || 'dev'; // Environments. dev || prod
+
+var ENV = 'dev'; // Set dev enviroment unless we pass in --production
+if(plugins.util.env.production)
+	ENV = 'prod';
+
 var onError = function(err) { }; // On error function
 var productionMode = ((ENV === 'prod') ? true : false); // Production mode is true or false, used for gulp-if on tasks
 
 // Function will look at GIT and get the current tag release. This is then appended as a version number
 // on the scripts within the index.html page.
 gulp.task('releaseTag', function(done) {
-	git.tag(function(str) {
-		RELEASE_TAG = str || 0;
+	git.short(function(str) {
+		// RELEASE_TAG = str || 0;
+		RELEASE_TAG = Math.floor(Math.random() * 10000) + 1;
 		return done();
 	});
 });
 
-var bootstrap = require('bootstrap-styl');
+/**
+ * Any errors will be paused and show this warning !!
+ * @param error
+ */
+function swallowError (error) {
+	console.log(error.toString());
+	this.emit('end')
+}
 
 // Styles
 gulp.task('styles', function() {
@@ -55,8 +73,9 @@ gulp.task('styles', function() {
 	var styleFiles = gulp.src(settings.styles)
 		.pipe(plugins.if(!productionMode, plugins.sourcemaps.init()))
 		.pipe(plugins.stylus({
-			use: bootstrap()
+			use: [bootstrap(), autoprefixer({browsers: ["> 0%"]})]
 		}))
+		.on('error', swallowError)
 		.pipe(plugins.if(!productionMode, plugins.sourcemaps.write()))
 		.pipe(plugins.plumber({
 			errorHandler: onError
@@ -102,23 +121,22 @@ gulp.task('scripts', function() {
 gulp.task('html', function() {
 	gulp.src(settings.index)
 		.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
-		.pipe(plugins.if(productionMode, plugins.htmlmin()))
+		.pipe(plugins.if(productionMode, plugins.htmlmin({collapseWhitespace: true})))
+		// .pipe(plugins.rename("angular.blade.php"))
 		.pipe(gulp.dest('dist'))
 		.pipe(reload({stream: true}));
 });
 
-// Gulp cleaning task deletes the whole dist directory ready for the other scripts to re-build it
+// Gulp cleaning task deletes the whole public directory ready for the other scripts to re-build it
 gulp.task('clean', function() {
-	del(['dist/']);
+	del(['dist/app.js']);
+	del(['dist/styles.css']);
 });
 
-// Browser-sync setup task
+// Browser-sync setup task - Hostlocation from package.json
 gulp.task('browser-sync', function() {
-	browserSync.init({
-		server: {
-			baseDir: "dist",
-			middleware: [historyApiFallback()]
-		}
+	browserSync.init(null, {
+		proxy: settings.hostLocation
 	});
 });
 
@@ -140,8 +158,13 @@ gulp.task('watch', ['browser-sync'], function() {
 
 // Build the app
 gulp.task('build', ['clean', 'releaseTag'], function() {
-	gulp.start('assets', 'styles', 'html', 'scripts');
+	gulp.start('assets', 'styles', 'scripts', 'html');
 });
 
-// Default task
-gulp.task('default', ['build', 'watch']);
+// Default task If we are in production mode only run the build, if we are in dev mode run build then watch
+gulp.task('default', function() {
+	if(productionMode)
+		gulp.start('build');
+	else
+		gulp.start('build', 'watch');
+});
