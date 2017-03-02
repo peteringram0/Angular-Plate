@@ -17,10 +17,8 @@
  *
  * @author Peter Ingram <peter.ingram0@gmail.com>
  *
- * ## Version 2.1 ##
- * * Environment var's within JS files
- * * Pauses on stylus errors
- * * Fix issue with autoprefixer
+ * ## Version 2.3 ##
+ * * Fixed issue with no copying over hidden files
  */
 
 	// Dependencies
@@ -135,9 +133,19 @@ gulp.task('clean', function() {
 
 // Browser-sync setup task - Hostlocation from package.json
 gulp.task('browser-sync', function() {
-	browserSync.init(null, {
-		proxy: settings.hostLocation
-	});
+
+	if(settings.hostLocation) {
+		browserSync.init(null, {
+			proxy: settings.hostLocation
+		});
+	} else {
+		browserSync.init({
+			server: {
+				baseDir: "./dist"
+			}
+		});
+	}
+
 });
 
 // Move Assets file

@@ -17,24 +17,24 @@
 
 		$stateProvider.state('wrapper', {
 			controller: 'wrapper as wrapper',
-			templateUrl: 'wrapper/wrapper.tpl.html'
+			templateUrl: 'views/wrapper/wrapper.tpl.html'
 		});
 
 		$stateProvider.state('wrapper.view1', {
 			url: '/view1',
 			controller: 'view1 as view1',
-			templateUrl: 'view1/view1.tpl.html'
+			templateUrl: 'views/view1/view1.tpl.html'
 		});
 
 		$stateProvider.state('wrapper.view2', {
 			url: '/view2',
 			controller: 'view2 as view2',
-			templateUrl: 'view2/view2.tpl.html'
+			templateUrl: 'views/view2/view2.tpl.html'
 		});
 
 		$stateProvider.state('otherwise', {
 			url: '/',
-			templateUrl: 'wrapper/wrapper.tpl.html'
+			templateUrl: 'views/wrapper/wrapper.tpl.html'
 		});
 
 	}

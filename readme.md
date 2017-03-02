@@ -7,6 +7,7 @@ Angular 1 Boilerplate
 Setup:
 
 Note: (Install .editorconfig package for your IDE)
+Note: install protractor globally (npm i protractor@2 -g)
 
 ```shell
 $ npm i

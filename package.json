@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "webdriver-start": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/webdriver-manager start",
-    "protractor": "./node_modules/protractor/bin/protractor ./tests/protractor.conf.js"
+    "protractor": "./node_modules/protractor/bin/protractor ./e2e-tests/protractor.config.js"
   },
   "authors": [
     {
@@ -28,7 +28,7 @@
       "node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js",
       "node_modules/ngstorage/ngStorage.min.js",
       "node_modules/angular-resource/angular-resource.min.js"
-	],
+    ],
     "partials": [
       "src/**/*.tpl.html",
       "!src/index.html"
@@ -45,7 +45,7 @@
     "styles": "src/styles/styles.styl",
     "assets": "src/assets/**/*.*",
     "index": "src/index.html",
-    "hostLocation": "http://127.0.0.1"
+    "hostLocation": ""
   },
   "devDependencies": {
     "autoprefixer-stylus": "latest",
@@ -76,6 +76,12 @@
     "http-server": "latest",
     "jasmine-core": "latest",
     "jshint-stylish": "latest",
+    "karma": "latest",
+    "karma-chrome-launcher": "latest",
+    "karma-firefox-launcher": "latest",
+    "karma-jasmine": "latest",
+    "karma-junit-reporter": "latest",
+    "protractor": "*",
     "requirejs": "latest",
     "shelljs": "latest",
     "streamqueue": "latest"
