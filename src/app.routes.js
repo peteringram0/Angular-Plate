@@ -20,6 +20,12 @@
 			templateUrl: 'views/wrapper/wrapper.tpl.html'
 		});
 
+		$stateProvider.state('wrapper.sink', {
+			url: '/sink',
+			controller: 'kitchensinkController as vm',
+			templateUrl: 'views/kitchensink/kitchensink.tpl.html'
+		});
+
 		$stateProvider.state('wrapper.view1', {
 			url: '/view1',
 			controller: 'view1 as view1',

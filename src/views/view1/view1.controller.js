@@ -9,24 +9,24 @@
 
 	function view1(apiFactory, localStorage) {
 
+		// Assign evertything to vm
 		var vm = this;
 
-		// Login function trigged from view
+		/**
+		 * Login function test
+		 */
 		vm.login = function() {
 
 			var creds = {
 				email: 'peter.ingram0@gmail.com',
-				pass: 'password'
+				password: 'password'
 			};
 
-			apiFactory.login(creds).then(function(response) {
-				console.log('resolved: ', response);
-			});
+			apiFactory.login(creds)
+				.then(function(response) {
+					console.log(response);
+				});
 
-		};
-
-		vm.getLocalStorage = function() {
-			console.log(localStorage.getStorage());
 		}
 
 	}

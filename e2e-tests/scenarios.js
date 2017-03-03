@@ -13,13 +13,12 @@ describe('my app', function() {
 	describe('view1', function() {
 
 		beforeEach(function() {
-			browser.get('/#/view1');
+			browser.get('/view1');
 		});
-
 
 		it('should render view1 when user navigates to /view1', function() {
 			expect(element.all(by.css('p')).first().getText()).
-			toMatch(/This is the partial for view 2/);
+			toMatch(/This is the partial for view 1/);
 		});
 
 	});

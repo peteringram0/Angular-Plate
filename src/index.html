@@ -1,45 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <title>AngularJS Boilerplate</title>
-    <meta name="description" content="">
+	<title>AngularJS Boilerplate</title>
+	<meta name="description" content="">
 
-	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+	<link rel="icon" href="/images/favicon.ico">
 
-	<!--<meta property="og:title" content="" />-->
-	<!--<meta property="og:url" content=""/>-->
-	<!--<meta property="og:image" content="" />-->
-	<!--<meta property="og:site_name" content="" />-->
-	<!--<meta property="og:description" content="" />-->
-	<!--<meta property="fb:app_id" content="" />-->
-	<!--<meta property="og:type" content="website" />-->
+	<meta http-equiv='cache-control' content='no-cache'>
+	<meta http-equiv='expires' content='0'>
+	<meta http-equiv='pragma' content='no-cache'>
 
-    <meta http-equiv='cache-control' content='no-cache'>
-    <meta http-equiv='expires' content='0'>
-    <meta http-equiv='pragma' content='no-cache'>
+	<base href="/">
 
-    <base href="/">
-
-	<link rel="stylesheet" href="/styles.css">
+	<link rel="stylesheet" type="text/css" href="/styles.css?v=<!--@echo RELEASE_TAG-->">
 
 </head>
+
 <body ng-strict-di ng-cloak>
 
-    <div ui-view>
-		Loading...
-	</div>
+	<div ui-view></div>
 
-	<!-- @if ENV='dev' -->
-	<script src="/app.js"></script>
-	<!-- @endif -->
-
-	<!-- @if ENV='prod' -->
 	<script src="/app.js?v=<!--@echo RELEASE_TAG-->"></script>
-	<!-- @endif -->
 
 </body>
+
 </html>

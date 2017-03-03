@@ -1,89 +1,106 @@
 {
-  "name": "angularjs-plate",
-  "version": "0.3.0",
-  "private": false,
-  "scripts": {
-    "webdriver-start": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/webdriver-manager start",
-    "protractor": "./node_modules/protractor/bin/protractor ./e2e-tests/protractor.config.js"
-  },
-  "authors": [
-    {
-      "name": "Peter Ingram",
-      "email": "peter.ingram0@gmail.com"
+    "name": "angularjs-plate",
+    "version": "0.4.0",
+    "private": false,
+    "scripts": {
+        "test:fn": "./node_modules/karma/bin/karma start karma.conf.js || true",
+        "webdriver-start": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/webdriver-manager start",
+        "test:e2e": "./node_modules/protractor/bin/protractor ./e2e-tests/protractor.config.js"
+    },
+    "authors": [{
+        "name": "Peter Ingram",
+        "email": "peter.ingram0@gmail.com"
+    }],
+    "dependencies": {
+        "angular": "^1.6.2",
+        "angular-resource": "^1.6.2",
+        "angular-sweetalert": "^1.1.2",
+        "angular-ui-bootstrap": "^2.5.0",
+        "angular-ui-router": "^0.4.2",
+        "bootstrap-styl": "^5.0.8",
+        "ngstorage": "^0.3.11"
+    },
+    "settings": {
+        "vendor": [
+            "node_modules/angular/angular.min.js",
+            "node_modules/angular-ui-router/release/angular-ui-router.min.js",
+            "node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js",
+            "node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js",
+            "node_modules/ngstorage/ngStorage.min.js",
+            "node_modules/angular-resource/angular-resource.min.js",
+            "node_modules/sweetalert/lib/sweet-alert.min.js",
+            "node_modules/angular-sweetalert/SweetAlert.min.js"
+        ],
+        "partials": [
+            "src/**/*.tpl.html",
+            "!src/index.html"
+        ],
+        "scripts": [
+            "src/**/*.js",
+            "!src/assets/*.js",
+            "!src/**/*.spec.js"
+        ],
+        "scriptsOrder": [
+            "app.js",
+            "**/*.js"
+        ],
+        "vendorStyles": [
+            "node_modules/angularjs-slider/dist/rzslider.css",
+            "node_modules/sweetalert/lib/sweet-alert.css"
+        ],
+        "styles": "src/styles/styles.styl",
+        "assets": [
+            "src/assets/**/.*",
+            "src/assets/**/*.*"
+        ],
+        "index": "src/index.html",
+        "hostLocation": ""
+    },
+    "devDependencies": {
+        "angular-mocks": "^1.6.2",
+        "autoprefixer-stylus": "latest",
+        "browser-sync": "latest",
+        "connect-history-api-fallback": "latest",
+        "del": "latest",
+        "git-rev": "latest",
+        "gulp": "latest",
+        "gulp-angular-filesort": "latest",
+        "gulp-chmod": "latest",
+        "gulp-clean": "latest",
+        "gulp-concat": "latest",
+        "gulp-concat-css": "latest",
+        "gulp-htmlmin": "latest",
+        "gulp-if": "latest",
+        "gulp-load-plugins": "latest",
+        "gulp-minify-css": "latest",
+        "gulp-ng-html2js": "latest",
+        "gulp-order": "latest",
+        "gulp-plumber": "latest",
+        "gulp-preprocess": "latest",
+        "gulp-rename": "latest",
+        "gulp-sourcemaps": "latest",
+        "gulp-stylus": "latest",
+        "gulp-uglify": "latest",
+        "gulp-util": "latest",
+        "gulp-watch": "latest",
+        "http-server": "latest",
+        "jasmine": "^2.5.2",
+        "jasmine-core": "^2.5.2",
+        "jshint-stylish": "latest",
+        "karma": "^1.4.1",
+        "karma-chrome-launcher": "latest",
+        "karma-firefox-launcher": "latest",
+        "karma-jasmine": "^1.1.0",
+        "karma-jasmine-ajax": "^0.1.13",
+        "karma-junit-reporter": "latest",
+        "karma-ng-html2js-preprocessor": "^1.0.0",
+        "karma-phantomjs-launcher": "^1.0.2",
+        "karma-sourcemap-loader": "^0.3.5",
+        "karma-spec-reporter": "0.0.26",
+        "phantomjs": "^2.1.7",
+        "protractor": "*",
+        "requirejs": "latest",
+        "shelljs": "latest",
+        "streamqueue": "latest"
     }
-  ],
-  "dependencies": {
-    "angular": "^1.5.7",
-    "angular-resource": "^1.5.7",
-    "angular-ui-bootstrap": "^1.3.3",
-    "angular-ui-router": "^0.2.18",
-    "bootstrap-styl": "^5.0.5",
-    "ngstorage": "^0.3.10"
-  },
-  "settings": {
-    "vendor": [
-      "node_modules/angular/angular.min.js",
-      "node_modules/angular-ui-router/release/angular-ui-router.min.js",
-      "node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js",
-      "node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js",
-      "node_modules/ngstorage/ngStorage.min.js",
-      "node_modules/angular-resource/angular-resource.min.js"
-    ],
-    "partials": [
-      "src/**/*.tpl.html",
-      "!src/index.html"
-    ],
-    "scripts": [
-      "src/**/*.js",
-      "!src/assets/*.js"
-    ],
-    "scriptsOrder": [
-      "app.js",
-      "**/*.js"
-    ],
-    "vendorStyles": "",
-    "styles": "src/styles/styles.styl",
-    "assets": "src/assets/**/*.*",
-    "index": "src/index.html",
-    "hostLocation": ""
-  },
-  "devDependencies": {
-    "autoprefixer-stylus": "latest",
-    "browser-sync": "latest",
-    "connect-history-api-fallback": "latest",
-    "del": "latest",
-    "git-rev": "latest",
-    "gulp": "latest",
-    "gulp-angular-filesort": "latest",
-    "gulp-chmod": "latest",
-    "gulp-clean": "latest",
-    "gulp-concat": "latest",
-    "gulp-concat-css": "latest",
-    "gulp-htmlmin": "latest",
-    "gulp-if": "latest",
-    "gulp-load-plugins": "latest",
-    "gulp-minify-css": "latest",
-    "gulp-ng-html2js": "latest",
-    "gulp-order": "latest",
-    "gulp-plumber": "latest",
-    "gulp-preprocess": "latest",
-    "gulp-rename": "latest",
-    "gulp-sourcemaps": "latest",
-    "gulp-stylus": "latest",
-    "gulp-uglify": "latest",
-    "gulp-util": "latest",
-    "gulp-watch": "latest",
-    "http-server": "latest",
-    "jasmine-core": "latest",
-    "jshint-stylish": "latest",
-    "karma": "latest",
-    "karma-chrome-launcher": "latest",
-    "karma-firefox-launcher": "latest",
-    "karma-jasmine": "latest",
-    "karma-junit-reporter": "latest",
-    "protractor": "*",
-    "requirejs": "latest",
-    "shelljs": "latest",
-    "streamqueue": "latest"
-  }
 }
