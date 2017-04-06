@@ -18,7 +18,8 @@
         "angular-ui-bootstrap": "^2.5.0",
         "angular-ui-router": "^0.4.2",
         "bootstrap-styl": "^5.0.8",
-        "ngstorage": "^0.3.11"
+        "ngstorage": "^0.3.11",
+        "fa-stylus": "^0.3.2"
     },
     "settings": {
         "vendor": [

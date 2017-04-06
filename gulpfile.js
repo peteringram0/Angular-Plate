@@ -17,8 +17,9 @@
  *
  * @author Peter Ingram <peter.ingram0@gmail.com>
  *
- * ## Version 2.3 ##
- * * Fixed issue with no copying over hidden files
+ * ## Version 2.5 ##
+ * * With FA
+ * * Fixed issue with re-load happening to quickly
  */
 
 	// Dependencies
@@ -32,6 +33,13 @@ var bootstrap = require('bootstrap-styl');
 var autoprefixer = require('autoprefixer-stylus');
 var packageJSON = require('./package.json');
 var settings = packageJSON.settings;
+
+var ENV_DEV = require('./dev.json');
+var ENV_PROD = require('./prod.json');
+
+var fontAwesomeStylus;
+if(settings.fonts)
+	fontAwesomeStylus = require("fa-stylus");
 
 // Settings
 var reload = browserSync.reload; // Reload browserSync
@@ -71,7 +79,11 @@ gulp.task('styles', function() {
 	var styleFiles = gulp.src(settings.styles)
 		.pipe(plugins.if(!productionMode, plugins.sourcemaps.init()))
 		.pipe(plugins.stylus({
-			use: [bootstrap(), autoprefixer({browsers: ["> 0%"]})]
+			use: [
+				bootstrap(),
+				autoprefixer({browsers: ["> 0%"]}),
+				fontAwesomeStylus()
+			]
 		}))
 		.on('error', swallowError)
 		.pipe(plugins.if(!productionMode, plugins.sourcemaps.write()))
@@ -81,9 +93,9 @@ gulp.task('styles', function() {
 
 	return streamqueue({objectMode: true}, vendorFiles, styleFiles)
 		.pipe(plugins.concatCss('styles.css'))
-		.pipe(plugins.if(productionMode, plugins.minifyCss()))
+		.pipe(plugins.if(productionMode, plugins.cleanCss({compatibility: 'ie8'})))
 		.pipe(gulp.dest('dist'))
-		.pipe(reload({stream: true}));
+		// .pipe(reload({stream: true}));
 
 });
 
@@ -111,21 +123,21 @@ gulp.task('scripts', function() {
 	return streamqueue({objectMode: true}, vendorFiles, partialFiles, scriptFiles)
 		.pipe(plugins.concat('app.js'))
 		.pipe(gulp.dest('dist'))
-		.pipe(reload({stream: true}));
+		// .pipe(reload({stream: true}));
 
 });
 
 // Move and process the main index.html page
 gulp.task('html', function() {
 	gulp.src(settings.index)
-		.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG}}))
+		.pipe(plugins.preprocess({context: {ENV: ENV, RELEASE_TAG: RELEASE_TAG, apiURL: ((ENV === 'prod') ? ENV_PROD.apiURL : ENV_DEV.apiURL)}}))
 		.pipe(plugins.if(productionMode, plugins.htmlmin({collapseWhitespace: true})))
 		// .pipe(plugins.rename("angular.blade.php"))
 		.pipe(gulp.dest('dist'))
-		.pipe(reload({stream: true}));
+		// .pipe(reload({stream: true}));
 });
 
-// Gulp cleaning task deletes the whole public directory ready for the other scripts to re-build it
+// Gulp cleaning task deletes the whole dist directory ready for the other scripts to re-build it
 gulp.task('clean', function() {
 	del(['dist/app.js']);
 	del(['dist/styles.css']);
@@ -150,18 +162,24 @@ gulp.task('browser-sync', function() {
 
 // Move Assets file
 gulp.task('assets', function() {
-	return gulp.src(settings.assets)
+
+	gulp.src(settings.assets)
 		.pipe(gulp.dest('dist'));
+
+	if(settings.fonts)
+		gulp.src(settings.fonts)
+			.pipe(gulp.dest('dist/fonts'));
+
 });
 
 // Watch everything
 gulp.task('watch', ['browser-sync'], function() {
-	gulp.watch('src/**/*.styl', ['styles']);
-	gulp.watch(settings.partials, ['scripts']);
-	gulp.watch(settings.scripts, ['scripts']);
-	gulp.watch(settings.assets, ['assets']);
-	gulp.watch(settings.partials, ['html']);
-	gulp.watch(settings.index, ['html']);
+	gulp.watch('src/**/*.styl', ['styles', browserSync.reload]);
+	gulp.watch(settings.partials, ['scripts', browserSync.reload]);
+	gulp.watch(settings.scripts, ['scripts', browserSync.reload]);
+	gulp.watch(settings.assets, ['assets', browserSync.reload]);
+	gulp.watch(settings.partials, ['html', browserSync.reload]);
+	gulp.watch(settings.index, ['html', browserSync.reload]);
 });
 
 // Build the app
