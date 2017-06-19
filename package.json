@@ -12,14 +12,15 @@
         "email": "peter.ingram0@gmail.com"
     }],
     "dependencies": {
-        "angular": "^1.6.2",
-        "angular-resource": "^1.6.2",
+        "angular": "^1.6.4",
+        "angular-resource": "^1.6.4",
         "angular-sweetalert": "^1.1.2",
         "angular-ui-bootstrap": "^2.5.0",
-        "angular-ui-router": "^0.4.2",
+        "angular-ui-router": "^1.0.3",
         "bootstrap-styl": "^5.0.8",
-        "ngstorage": "^0.3.11",
-        "fa-stylus": "^0.3.2"
+        "fa-stylus": "^0.3.2",
+        "gulp-clean-css": "^3.4.2",
+        "ngstorage": "^0.3.11"
     },
     "settings": {
         "vendor": [
@@ -58,7 +59,7 @@
         "hostLocation": ""
     },
     "devDependencies": {
-        "angular-mocks": "^1.6.2",
+        "angular-mocks": "latest",
         "autoprefixer-stylus": "latest",
         "browser-sync": "latest",
         "connect-history-api-fallback": "latest",
@@ -85,21 +86,21 @@
         "gulp-util": "latest",
         "gulp-watch": "latest",
         "http-server": "latest",
-        "jasmine": "^2.5.2",
-        "jasmine-core": "^2.5.2",
+        "jasmine": "latest",
+        "jasmine-core": "latest",
         "jshint-stylish": "latest",
-        "karma": "^1.4.1",
+        "karma": "latest",
         "karma-chrome-launcher": "latest",
         "karma-firefox-launcher": "latest",
-        "karma-jasmine": "^1.1.0",
-        "karma-jasmine-ajax": "^0.1.13",
+        "karma-jasmine": "latest",
+        "karma-jasmine-ajax": "latest",
         "karma-junit-reporter": "latest",
-        "karma-ng-html2js-preprocessor": "^1.0.0",
-        "karma-phantomjs-launcher": "^1.0.2",
-        "karma-sourcemap-loader": "^0.3.5",
-        "karma-spec-reporter": "0.0.26",
-        "phantomjs": "^2.1.7",
-        "protractor": "*",
+        "karma-ng-html2js-preprocessor": "latest",
+        "karma-phantomjs-launcher": "latest",
+        "karma-sourcemap-loader": "latest",
+        "karma-spec-reporter": "latest",
+        "phantomjs": "latest",
+        "protractor": "latest",
         "requirejs": "latest",
         "shelljs": "latest",
         "streamqueue": "latest"
